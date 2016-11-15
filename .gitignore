@@ -1,6 +1,5 @@
 node_modules/
 *.log*
-lib
 .DS_Store
 npm-debug.log
 *.swp

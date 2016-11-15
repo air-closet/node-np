@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "$(npm bin)/eslint src test",
-    "build": "$(npm bin)/browserify -t babelify -o ./lib/bundle.js ./src/index.js --list"
+    "build": "$(npm bin)/babel src --out-dir lib"
   },
   "repository": {
     "type": "git",
@@ -19,12 +19,12 @@
   },
   "homepage": "https://github.com/air-closet/node-np#readme",
   "dependencies": {
-    "babel-eslint": "^7.1.0",
     "fs-promise": "^1.0.0",
     "soap": "^0.17.0",
     "xmljson": "^0.2.0"
   },
   "devDependencies": {
+    "babel-cli": "^6.18.0",
     "babel-core": "^6.18.2",
     "babel-eslint": "^7.1.0",
     "babel-plugin-add-module-exports": "^0.2.1",
@@ -32,8 +32,6 @@
     "babel-preset-stage-0": "^6.16.0",
     "babel-preset-stage-2": "^6.18.0",
     "babel-preset-stage-3": "^6.17.0",
-    "babelify": "^7.3.0",
-    "browserify": "^13.1.1",
     "eslint": "^2.8.0",
     "eslint-config-airbnb": "^8.0.0",
     "eslint-plugin-import": "^1.5.0",

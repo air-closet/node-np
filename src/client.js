@@ -1,7 +1,5 @@
 import soap from 'soap'
 import xmljson from 'xmljson'
-// import _ from 'underscore'
-// import fs from 'fs-promise'
 
 class NetProtection {
     constructor(opts) {
@@ -20,6 +18,9 @@ class NetProtection {
                 }
             })
         })
+        .then(() => {
+            console.log('success _connect')
+        })
         .catch(err => {
             console.log(`connect error: ${JSON.stringify(err, null, '\t')}`)
             return err
@@ -29,7 +30,6 @@ class NetProtection {
     _getConnection() {
         if (!this._conn) {
             return this._connect()
-            .then(() => console.log('####################### ok: _getConnection ######################'))
         }
         return Promise.resolve()
     }
@@ -81,37 +81,38 @@ class NetProtection {
     post(param) {
         return this._http('post', param)
     }
-
-
-    // export
-    createXml(filePath, param) {
-        let header
-        let content
-
-        switch (filePath) {
-        case 'XU0010':
-            header = ''
-            content = ''
-            break
-        default:
-            header = ''
-            content = ''
-        }
-        //
-        // return fs.readFile(filePath, 'utf8')
-        // .then(result => _.template(result)(param))
-        // .catch(err => Promise.reject(err))
-    }
+    // // export
+    // createXml(filePath, param) {
+    //     let header
+    //     let content
+    //
+    //     switch (filePath) {
+    //     case 'XU0010':
+    //         header = ''
+    //         content = ''
+    //         break
+    //     default:
+    //         header = ''
+    //         content = ''
+    //     }
+    //     //
+    //     // return fs.readFile(filePath, 'utf8')
+    //     // .then(result => _.template(result)(param))
+    //     // .catch(err => Promise.reject(err))
+    // }
 }
 
 class NPClient extends NetProtection {
     constructor(opts) {
+        opts = Object.assign({}, {
+            wsdl: '',
+        }, opts)
+
         super(opts)
     }
 
     registerTran() {
-        const INTERFACE = 'MS_CB_IN_0001'
-
+        // const INTERFACE = 'MS_CB_IN_0001'
         let head = `<head>
         <telegram_id>XU0010</telegram_id>
         <terminal_id>2000035000</terminal_id>
@@ -159,13 +160,6 @@ class NPClient extends NetProtection {
         </root>`
 
         return super.post({ head, body })
-        .then(result => {
-            console.log('---------------------- kuri ----------------------')
-            console.log('kuri: ' + JSON.stringify(result, null, '\t'))
-            console.log('---------------------- kuri ----------------------')
-
-            return result
-        })
         .catch(err => {
             console.error('error')
             return Promise.reject(err)
@@ -173,12 +167,10 @@ class NPClient extends NetProtection {
     }
 
     getTranResult() {
-        const INTERRFACE = 'MS_CB_IN_0001'
-
-        let header
-        let body
-        return super.get({ head, body })
+        // const INTERRFACE = 'MS_CB_IN_0001'
+        // return super.get({ head, body })
     }
 }
 
-export default new NPClient()
+export default NPClient
+// export default new NPClient()

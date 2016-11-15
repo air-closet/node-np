@@ -1,1 +1,1 @@
-require('./client')
+export default require('./client')
