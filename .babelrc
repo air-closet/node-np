@@ -1,6 +1,10 @@
 {
   "plugins": [
-    "add-module-exports",
+    ["module-alias",[
+      { "src": "./config", "expose": "config" },
+      { "src": "./src", "expose": "src" }
+    ]],
+    "add-module-exports"
   ],
   "presets": [
     "es2015",

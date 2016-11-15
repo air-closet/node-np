@@ -1,0 +1,6 @@
+<head>
+    <telegram_id><%= telegramId %></telegram_id>
+    <terminal_id><%= terminalId %></terminal_id>
+    <sp_code><%= spCode %></sp_code>
+    <version><%= version %></version>
+</head>

@@ -1,1 +1,1 @@
-export default require('./client')
+export default require('./np')
