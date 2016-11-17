@@ -1,0 +1,7 @@
+<root>
+    <telegram_id></telegram_id>
+    <terminal_id></terminal_id>
+    <transaction_cancel_details>
+        <np_transaction_id></np_transaction_id>
+    </transaction_cancel_details>
+</root>

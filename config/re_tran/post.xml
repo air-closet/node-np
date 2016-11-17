@@ -1,0 +1,20 @@
+<root>
+    <telegram_id></telegram_id>
+    <terminal_id></terminal_id>
+    <transaction_details>
+        <base_transaction>
+            <np_transaction_id></np_transaction_id>
+            <shop_transaction_id>0001</shop_transaction_id>
+        </base_transaction>
+        <shop_transaction_id>0001</shop_transaction_id>
+        <order_date>2016/12/31</order_date>
+        <billed_amount>5500</billed_amount>
+        <goods_details>
+            <goods_information>
+                <goods_name>ルーター</goods_name>
+                <goods_price>5000</goods_price>
+                <quantity>1</quantity>
+            </goods_information>
+        </goods_details>
+    </transaction_details>
+</root>

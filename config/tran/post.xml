@@ -1,0 +1,38 @@
+<root>
+    <telegram_id><%= telegramId %></telegram_id>
+    <terminal_id><%= terminalId %></terminal_id>
+    <transaction_details>
+        <shop_transaction_id>0101</shop_transaction_id>
+        <order_date>2016/11/16</order_date>
+        <customer_information>
+            <company_name>購入者会社名</company_name>
+            <department>購入者部署名</department>
+            <customer_name>購入者名</customer_name>
+            <customer_name_kana>ヤマダハナヤマダ</customer_name_kana>
+            <zip>107-0052</zip>
+            <address>東京都港区赤坂11-22-33 </address>
+            <tel>03-1234-9999</tel>
+            <email>OK@air-closet.com</email>
+        </customer_information>
+        <dest_information>
+            <dest_company_name>配送先会社名</dest_company_name>
+            <dest_department>配送先部署名</dest_department>
+            <dest_customer_name>配送先名</dest_customer_name>
+            <dest_customer_name_kana>エアークローゼット</dest_customer_name_kana>
+            <dest_zip>151-0053</dest_zip>
+            <dest_address>東京都渋谷区 </dest_address>
+            <dest_tel>03-9999-9991</dest_tel>
+        </dest_information>
+        <settlement_type>02</settlement_type>
+        <site_name>NPショップ</site_name>
+        <site_url>https://www.google.co.jp/</site_url>
+        <billed_amount>5500</billed_amount>
+        <goods_details>
+            <goods_information>
+                <goods_name>ルーター</goods_name>
+                <goods_price>5000</goods_price>
+                <quantity>1</quantity>
+            </goods_information>
+        </goods_details>
+    </transaction_details>
+</root>

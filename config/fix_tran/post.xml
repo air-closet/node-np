@@ -1,7 +1,8 @@
 <root>
-    <telegram_id>XU0010</telegram_id>
-    <terminal_id>2000035000</terminal_id>
+    <telegram_id>XU0030</telegram_id>
+    <terminal_id><%= terminalId %></terminal_id>
     <transaction_details>
+        <no_transaction_id><%= noTransactionId %></no_transaction_id>
         <shop_transaction_id>0001</shop_transaction_id>
         <order_date>2016/12/31</order_date>
         <customer_information>

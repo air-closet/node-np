@@ -1,0 +1,10 @@
+<root>
+    <telegram_id></telegram_id>
+    <terminal_id></terminal_id>
+    <shipment_details>
+        <np_transaction_id></np_transaction_id>
+        <pd_company_code></pd_company_code>
+        <slip_no></slip_no>
+        <billed_send_date></billed_send_date>
+    </shipment_details>
+</root>

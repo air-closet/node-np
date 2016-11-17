@@ -1,0 +1,76 @@
+{
+    "tran": {
+        "get": {
+            "interface": "MS_CB_OT_0001",
+            "path": "/config/tran/get.xml",
+            "telegramId": "XD0010"
+        },
+        "post": {
+            "interface": "MS_CB_IN_0001",
+            "path": "/config/tran/post.xml",
+            "telegramId": "XU0010"
+        }
+    },
+    "delivery_billing": {
+        "get": {
+            "interface": "MS_CB_OT_0004",
+            "path": "/config/delivery_billing/get.xml",
+            "telegramId": "XD0020"
+        },
+        "post": {
+            "interface": "MS_CB_IN_0004",
+            "path": "/config/delivery_billing/post.xml",
+            "telegramId": "XU0020"
+        }
+    },
+    "fix_tran": {
+        "get": {
+            "interface": "MS_CB_OT_0002",
+            "path": "/config/fix_tran/get.xml",
+            "telegramId": "XD0030"
+        },
+        "post": {
+            "interface": "MS_CB_IN_0002",
+            "path": "/config/fix_tran/post.xml",
+            "telegramId": "XU0030"
+        }
+    },
+    "cancel_tran": {
+        "get": {
+            "interface": "MS_CB_OT_0003",
+            "path": "/config/cancel_tran/get.xml",
+            "telegramId": "XD0040"
+        },
+        "post": {
+            "interface": "MS_CB_IN_0003",
+            "path": "/config/cancel_tran/post.xml",
+            "telegramId": "XU0040"
+        }
+    },
+    "re_tran": {
+        "get": {
+            "interface": "MS_CB_OT_0008",
+            "path": "/config/re_tran/get.xml",
+            "telegramId": "XD0050"
+        },
+        "post": {
+            "interface": "MS_CB_IN_0008",
+            "path": "/config/re_tran/post.xml",
+            "telegramId": "XU0050"
+        }
+    },
+    "credit": {
+        "get": {
+            "interface": "MS_CB_OT_0005",
+            "path": "/config/credit/get.xml",
+            "telegramId": "XD1010"
+        }
+    },
+    "billing_details": {
+        "get": {
+            "interface": "MS_CB_OT_0006",
+            "path": "/config/billing_details/get.xml",
+            "telegramId": "XD1020"
+        }
+    }
+}
