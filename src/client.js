@@ -18,13 +18,6 @@ class Client {
                 }
             })
         })
-        .then(() => {
-            console.log('success _connect')
-        })
-        .catch(err => {
-            console.log(`connect error: ${JSON.stringify(err, null, '\t')}`)
-            return Promise.reject(err)
-        })
     }
 
     _getConnection() {
@@ -47,29 +40,26 @@ class Client {
 
     send(method, param) {
         return this._getConnection()
-        .then(() => {
-            console.log('start soap transfer')
-
-            return new Promise((resolve, reject) => {
-                this.client[method].call(this.client, param, (err, result) => {
-                    if (err) {
-                        reject(err)
-                    } else {
-                        resolve(result)
-                    }
-                })
+        .then(() => new Promise((resolve, reject) => {
+            this.client[method].call(this.client, param, (err, result) => {
+                if (err) {
+                    reject(err)
+                } else {
+                    resolve(result)
+                }
             })
-        })
-        .then(resultXml => {
-            console.log('start converting xml to json')
-            console.log(`soap result: ${JSON.stringify(resultXml)}`)
-
-            const xmlStr = resultXml.postReturn.$value
+        }))
+        .then(returnObj => {
+            const xmlStr = returnObj[`${method}Return`].$value
             return this._convertXml2Json(xmlStr)
         })
-        .catch(err => {
-            console.error('occured error during _http')
-            return Promise.reject(err)
+        .then(json => {
+            json = json.root || json
+
+            if (json.error_info) {
+                return Promise.reject(json.error_info)
+            }
+            return json
         })
     }
 }
