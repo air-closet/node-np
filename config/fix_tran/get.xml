@@ -1,4 +1,4 @@
 <root>
-    <telegram_id></telegram_id>
-    <accept_no></accept_no>
+    <telegram_id><%= telegramId %></telegram_id>
+    <accept_no><%= acceptNo %></accept_no>
 </root>
