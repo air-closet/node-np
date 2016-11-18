@@ -8,7 +8,10 @@ const POST = 'post'
 const HEAD_PATH = '/config/head.xml'
 const CONF_PATH = '/config/config.json'
 const VERSION = '2.00'
-const log = str => console.log(str)
+const { log } = console
+
+const readFile = path => fs.readFile(path, 'utf8')
+const readXML = (path, arg) => readFile(path).then(plain => template(plain)(arg))
 
 class NP {
     constructor() {
@@ -39,21 +42,15 @@ class NP {
         return this._startup()
     }
 
-    _readFile(filePath) {
-        const path = `${this._confRoot}${filePath}`
-        return fs.readFile(path, 'utf8')
-    }
-
-    _readXML(filePath, arg) {
-        return this._readFile(filePath)
-        .then(plain => template(plain)(arg))
+    _getAbsoPath(filePath) {
+        return `${this._confRoot}${filePath}`
     }
 
     // headの作成は調整が入りそう
     _createRequest(filePath, arg) {
         const createXML = [
-            this._readXML(HEAD_PATH, Object.assign({}, this.conf, arg)),
-            this._readXML(filePath, arg),
+            readXML(this._getAbsoPath(HEAD_PATH), Object.assign({}, this.conf, arg)),
+            readXML(this._getAbsoPath(filePath), arg),
         ]
 
         return Promise.all(createXML)
@@ -84,7 +81,7 @@ class NP {
     }
 
     _startup() {
-        return this._readFile(CONF_PATH)
+        return readFile(this._getAbsoPath(CONF_PATH))
         .then(jsonStr => JSON.parse(jsonStr))
         .then(json => {
             Object.keys(json).forEach(apiName => {

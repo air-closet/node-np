@@ -3,13 +3,19 @@ import xmljson from 'xmljson'
 
 class Client {
     constructor(opts) {
+        if (!opts || !opts.wsdl) {
+            throw new Error('required wsdl option')
+        }
         this.wsdl = opts.wsdl
         this.client = null
+
+        this.soap = soap
+        this.xmljson = xmljson
     }
 
     _connect() {
         return new Promise((resolve, reject) => {
-            soap.createClient(this.wsdl, (err, client) => {
+            this.soap.createClient(this.wsdl, (err, client) => {
                 if (err) {
                     reject(err)
                 } else {
@@ -29,7 +35,7 @@ class Client {
 
     _convertXml2Json(xmlStr) {
         return new Promise((resolve, reject) => {
-            xmljson.to_json(xmlStr, (err, json) => {
+            this.xmljson.to_json(xmlStr, (err, json) => {
                 if (err) {
                     return reject(err)
                 }
