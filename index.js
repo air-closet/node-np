@@ -1,1 +1,2 @@
-module.exports = require('./lib/')
+const NP = require('./lib/')
+module.exports = new NP(__dirname)

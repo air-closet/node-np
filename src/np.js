@@ -14,8 +14,8 @@ const readFile = path => fs.readFile(path, 'utf8')
 const readXML = (path, arg) => readFile(path).then(plain => template(plain)(arg))
 
 class NP {
-    constructor() {
-        this._confRoot = process.cwd()
+    constructor(root) {
+        this._confRoot = root
     }
 
     createClient(opts) {
@@ -129,4 +129,4 @@ class NP {
     }
 }
 
-export default new NP()
+export default NP
