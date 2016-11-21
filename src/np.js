@@ -19,6 +19,10 @@ class NP {
     }
 
     createClient(opts) {
+        if (this._client) {
+            return this
+        }
+
         opts = Object.assign({}, {
             wsdl: null,
             terminalId: null,
