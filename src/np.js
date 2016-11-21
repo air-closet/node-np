@@ -20,7 +20,7 @@ class NP {
 
     createClient(opts) {
         if (this._client) {
-            return this
+            return Promise.resolve(this)
         }
 
         opts = Object.assign({}, {

@@ -1,6 +1,6 @@
 const fs = require('fs-promise')
 const _ = require('underscore')
-const NP = require('../lib/')
+const NPClass = require('../lib/')
 const assert = require('power-assert')
 
 const defaultArg = {
@@ -9,6 +9,8 @@ const defaultArg = {
     spCode: 'spCode',
     debug: false,
 }
+
+const NP = new NPClass(process.cwd())
 
 describe('api wrapper', () => {
     it('default value', () => {
