@@ -3,7 +3,8 @@
         "get": {
             "interface": "MS_CB_OT_0001",
             "path": "/config/tran/get.xml",
-            "telegramId": "XD0010"
+            "telegramId": "XD0010",
+            "response": "transaction_regist_details"
         },
         "post": {
             "interface": "MS_CB_IN_0001",
@@ -15,7 +16,8 @@
         "get": {
             "interface": "MS_CB_OT_0004",
             "path": "/config/delivery_billing/get.xml",
-            "telegramId": "XD0020"
+            "telegramId": "XD0020",
+            "response": "shipment_report_details"
         },
         "post": {
             "interface": "MS_CB_IN_0004",
@@ -23,11 +25,12 @@
             "telegramId": "XU0020"
         }
     },
-    "fix_tran": {
+    "change_tran": {
         "get": {
             "interface": "MS_CB_OT_0002",
             "path": "/config/fix_tran/get.xml",
-            "telegramId": "XD0030"
+            "telegramId": "XD0030",
+            "response": "transaction_revision_details"
         },
         "post": {
             "interface": "MS_CB_IN_0002",
@@ -39,7 +42,8 @@
         "get": {
             "interface": "MS_CB_OT_0003",
             "path": "/config/cancel_tran/get.xml",
-            "telegramId": "XD0040"
+            "telegramId": "XD0040",
+            "response": "transaction_cancel_details"
         },
         "post": {
             "interface": "MS_CB_IN_0003",
@@ -51,7 +55,8 @@
         "get": {
             "interface": "MS_CB_OT_0008",
             "path": "/config/re_tran/get.xml",
-            "telegramId": "XD0050"
+            "telegramId": "XD0050",
+            "response": "transaction_details"
         },
         "post": {
             "interface": "MS_CB_IN_0008",
@@ -63,14 +68,16 @@
         "get": {
             "interface": "MS_CB_OT_0005",
             "path": "/config/credit/get.xml",
-            "telegramId": "XD1010"
+            "telegramId": "XD1010",
+            "response": "authori_result_details"
         }
     },
     "billing_details": {
         "get": {
             "interface": "MS_CB_OT_0006",
             "path": "/config/billing_details/get.xml",
-            "telegramId": "XD1020"
+            "telegramId": "XD1020",
+            "response": "transaction_details"
         }
     }
 }

@@ -58,19 +58,16 @@ class NP {
         ]
 
         return Promise.all(createXML)
-        .then(xmls => {
+        .then(([head, body]) => {
             if (this.debug) {
                 log('---------- HEAD -----------')
-                log(xmls[0])
+                log(head)
                 log('---------- BODY -----------')
-                log(xmls[1])
+                log(body)
                 log('---------------------------')
             }
 
-            return {
-                head: xmls[0],
-                body: xmls[1],
-            }
+            return { head, body }
         })
     }
 
@@ -96,9 +93,22 @@ class NP {
                 let method = null
                 if (getInfo) {
                     method = `${GET}${classify(apiName)}`
-                    this[method] = arg => this._get(getInfo.path, {
+
+                    // catch-handler is common error in NP
+                    this[method] = arg => Promise.resolve()
+                    .then(() => this._get(getInfo.path, {
                         telegramId: getInfo.telegramId,
-                        ...arg })
+                        ...arg,
+                    }))
+                    .then(response => {
+                        response.details = response[getInfo.response]
+
+                        delete response[getInfo.response]
+                        return response
+                    })
+                    .catch(err => ({
+                        details: { regist_NG_result: { error_list: err } }
+                    }))
 
                     if (this.debug) {
                         log('========== METHOD ========')
