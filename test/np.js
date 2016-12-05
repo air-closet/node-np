@@ -88,7 +88,7 @@ describe('api wrapper', () => {
         .then(() => {
             cli._client.send = (method, req) => {
                 let values = {
-                    details: req,
+                    authori_result_details: req,
                 }
 
                 return Promise.resolve(values)
@@ -153,7 +153,7 @@ describe('api wrapper', () => {
         .then(() => {
             cli._client.send = () => Promise.resolve(getSuccessValues)
         })
-        .then(() => cli._get())
+        .then(() => cli._get('', '', 'details'))
         .then(response => {
             assert(response.status === 'OK')
             assert(response.result.np_transaction_id === 'xxxxx')
@@ -161,7 +161,7 @@ describe('api wrapper', () => {
         .then(() => {
             cli._client.send = () => Promise.resolve(getRejectValues)
         })
-        .then(() => cli._get())
+        .then(() => cli._get('', '', 'details'))
         .then(response => {
             assert(response.status === 'NG')
             assert(response.error.error_no === 'xxx12345')

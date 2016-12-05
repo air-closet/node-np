@@ -45,10 +45,10 @@ class NP {
         return `${this._confRoot}${filePath}`
     }
 
-    _createRequest(filePath, arg) {
+    _createRequest(filePath, param) {
         const createXML = [
-            readXML(this._getAbsoPath(CONST.PATH.HEAD), Object.assign({}, this.conf, arg)),
-            readXML(this._getAbsoPath(filePath), arg),
+            readXML(this._getAbsoPath(CONST.PATH.HEAD), Object.assign({}, this.conf, param)),
+            readXML(this._getAbsoPath(filePath), param),
         ]
 
         return Promise.all(createXML)
@@ -65,31 +65,29 @@ class NP {
         })
     }
 
-    _post(filePath, arg) {
-        return this._createRequest(filePath, arg)
+    _post(filePath, param) {
+        return this._createRequest(filePath, param)
         .then(request => this._client.send(CONST.HTTP.POST, request))
         .then(response => response.accept_no)
     }
 
-    _get(filePath, arg) {
-        return this._createRequest(filePath, arg)
+    _get(filePath, param, detailsKey) {
+        return this._createRequest(filePath, param)
         .then(request => this._client.send(CONST.HTTP.GET, request))
-        .then(response => this._convertGetResponse(response))
+        .then(response => this._convertGetResponseDetail(response[detailsKey]))
     }
 
-    _convertGetResponse(response) {
-        response = response.details
-
-        if (response.regist_NG_result) {
+    _convertGetResponseDetail(details) {
+        if (details.regist_NG_result) {
             return {
                 status: CONST.RESPONSE.NG,
-                error: response.regist_NG_result.error_list,
+                error: details.regist_NG_result.error_list,
             }
         }
 
         return {
             status: CONST.RESPONSE.OK,
-            result: response.regist_OK_result || response,
+            result: details.regist_OK_result || details,
         }
     }
 
@@ -107,17 +105,11 @@ class NP {
                     method = `${CONST.HTTP.GET}${classify(apiName)}`
 
                     // catch-handler is common error in NP
-                    this[method] = arg => Promise.resolve()
+                    this[method] = param => Promise.resolve()
                     .then(() => this._get(getInfo.path, {
                         telegramId: getInfo.telegramId,
-                        ...arg,
-                    }))
-                    .then(response => {
-                        response.details = response[getInfo.response]
-
-                        delete response[getInfo.response]
-                        return response
-                    })
+                        ...param,
+                    }, getInfo.response))
                     .catch(err => ({
                         details: { regist_NG_result: { error_list: err } }
                     }))
@@ -132,10 +124,13 @@ class NP {
 
                 if (postInfo) {
                     method = `${CONST.HTTP.POST}${classify(apiName)}`
-                    this[method] = arg => this._post(postInfo.path, {
+                    this[method] = param => Promise.resolve()
+                    .then(() => this._post(postInfo.path, {
                         telegramId: postInfo.telegramId,
                         terminalId: this.conf.terminalId,
-                        ...arg })
+                        ...param,
+                    }))
+                    .then(response => response.accept_no)
 
                     if (this.debug) {
                         log(CONST.LOG.METHOD)
