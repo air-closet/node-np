@@ -86,10 +86,17 @@ describe('api wrapper', () => {
         return createClient(defaultArg)
         .then(client => { cli = client })
         .then(() => {
-            cli._client.send = (method, req) => Promise.resolve(req)
+            cli._client.send = (method, req) => {
+                let values = {
+                    details: req,
+                }
+
+                return Promise.resolve(values)
+            }
             return cli.getCredit()
         })
-        .then(({ head, body }) => {
+        .then((response) => {
+            const { head, body } = response.result
             assert(body === '')
 
             const headXmlPath = `${require('path').resolve('')}/config/head.xml`
@@ -121,19 +128,43 @@ describe('api wrapper', () => {
     })
 
     it('_get/_post', () => {
-        const values = { content: 'ok' }
+        const postValues = { accept_no: 'ok' }
+        const getSuccessValues = {
+            details: {
+                regist_OK_result: { np_transaction_id: 'xxxxx' }
+            }
+        }
+        const getRejectValues = {
+            details: {
+                regist_NG_result: { error_list: { error_no: 'xxx12345' } }
+            }
+        }
         let cli
 
         return createClient(defaultArg)
         .then(client => {
             cli = client
-            cli._client.send = () => Promise.resolve(values)
+            cli._client.send = () => Promise.resolve(postValues)
             cli._createRequest = () => Promise.resolve()
 
             return cli._post()
         })
-        .then(result => assert(result === values))
+        .then(result => assert(result === postValues.accept_no))
+        .then(() => {
+            cli._client.send = () => Promise.resolve(getSuccessValues)
+        })
         .then(() => cli._get())
-        .then(result => assert(result === values))
+        .then(response => {
+            assert(response.status === 'OK')
+            assert(response.result.np_transaction_id === 'xxxxx')
+        })
+        .then(() => {
+            cli._client.send = () => Promise.resolve(getRejectValues)
+        })
+        .then(() => cli._get())
+        .then(response => {
+            assert(response.status === 'NG')
+            assert(response.error.error_no === 'xxx12345')
+        })
     })
 })

@@ -2,15 +2,10 @@ import fs from 'fs-promise'
 import { template } from 'underscore'
 import { classify } from 'underscore.string'
 import Client from './client'
+import CONST from './constants'
 
-const GET = 'get'
-const POST = 'post'
-const HEAD_PATH = '/config/head.xml'
-const CONF_PATH = '/config/config.json'
-const VERSION = '2.00'
 const { log } = console
-
-const readFile = path => fs.readFile(path, 'utf8')
+const readFile = path => fs.readFile(path, CONST.UTF8)
 const readXML = (path, arg) => readFile(path).then(plain => template(plain)(arg))
 
 class NP {
@@ -31,7 +26,7 @@ class NP {
         }, opts)
 
         if (!(opts.wsdl && opts.terminalId && opts.spCode)) {
-            return Promise.reject('required wsdl, terminalId, spCode.')
+            return Promise.reject(CONST.ERROR.CLIENT)
         }
 
         this.debug = opts.debug
@@ -40,7 +35,7 @@ class NP {
         this.conf = {
             terminalId: opts.terminalId,
             spCode: opts.spCode,
-            version: VERSION,
+            version: CONST.VERSION,
         }
 
         return this._startup()
@@ -50,21 +45,20 @@ class NP {
         return `${this._confRoot}${filePath}`
     }
 
-    // headの作成は調整が入りそう
     _createRequest(filePath, arg) {
         const createXML = [
-            readXML(this._getAbsoPath(HEAD_PATH), Object.assign({}, this.conf, arg)),
+            readXML(this._getAbsoPath(CONST.PATH.HEAD), Object.assign({}, this.conf, arg)),
             readXML(this._getAbsoPath(filePath), arg),
         ]
 
         return Promise.all(createXML)
         .then(([head, body]) => {
             if (this.debug) {
-                log('---------- HEAD -----------')
+                log(CONST.LOG.HEAD)
                 log(head)
-                log('---------- BODY -----------')
+                log(CONST.LOG.BODY)
                 log(body)
-                log('---------------------------')
+                log(CONST.LOG.DELIMITER)
             }
 
             return { head, body }
@@ -73,16 +67,34 @@ class NP {
 
     _post(filePath, arg) {
         return this._createRequest(filePath, arg)
-        .then(request => this._client.send(POST, request))
+        .then(request => this._client.send(CONST.HTTP.POST, request))
+        .then(response => response.accept_no)
     }
 
     _get(filePath, arg) {
         return this._createRequest(filePath, arg)
-        .then(request => this._client.send(GET, request))
+        .then(request => this._client.send(CONST.HTTP.GET, request))
+        .then(response => this._convertGetResponse(response))
+    }
+
+    _convertGetResponse(response) {
+        response = response.details
+
+        if (response.regist_NG_result) {
+            return {
+                status: CONST.RESPONSE.NG,
+                error: response.regist_NG_result.error_list,
+            }
+        }
+
+        return {
+            status: CONST.RESPONSE.OK,
+            result: response.regist_OK_result || response,
+        }
     }
 
     _startup() {
-        return readFile(this._getAbsoPath(CONF_PATH))
+        return readFile(this._getAbsoPath(CONST.PATH.CONF))
         .then(jsonStr => JSON.parse(jsonStr))
         .then(json => {
             Object.keys(json).forEach(apiName => {
@@ -92,7 +104,7 @@ class NP {
 
                 let method = null
                 if (getInfo) {
-                    method = `${GET}${classify(apiName)}`
+                    method = `${CONST.HTTP.GET}${classify(apiName)}`
 
                     // catch-handler is common error in NP
                     this[method] = arg => Promise.resolve()
@@ -111,24 +123,24 @@ class NP {
                     }))
 
                     if (this.debug) {
-                        log('========== METHOD ========')
+                        log(CONST.LOG.METHOD)
                         log(method)
-                        log('---------- ARGS ----------')
+                        log(CONST.LOG.PARAM)
                         log(getInfo)
                     }
                 }
 
                 if (postInfo) {
-                    method = `${POST}${classify(apiName)}`
+                    method = `${CONST.HTTP.POST}${classify(apiName)}`
                     this[method] = arg => this._post(postInfo.path, {
                         telegramId: postInfo.telegramId,
                         terminalId: this.conf.terminalId,
                         ...arg })
 
                     if (this.debug) {
-                        log('========== METHOD ========')
+                        log(CONST.LOG.METHOD)
                         log(method)
-                        log('---------- ARGS ----------')
+                        log(CONST.LOG.PARAM)
                         log(postInfo)
                     }
                 }
