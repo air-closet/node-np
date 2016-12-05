@@ -74,6 +74,12 @@ class NP {
     _get(filePath, param, detailsKey) {
         return this._createRequest(filePath, param)
         .then(request => this._client.send(CONST.HTTP.GET, request))
+        .catch(err => {
+            let response = {}
+            response[detailsKey] = { regist_NG_result: { error_list: err } }
+
+            return response
+        })
         .then(response => this._convertGetResponseDetail(response[detailsKey]))
     }
 
@@ -110,9 +116,6 @@ class NP {
                         telegramId: getInfo.telegramId,
                         ...param,
                     }, getInfo.response))
-                    .catch(err => ({
-                        details: { regist_NG_result: { error_list: err } }
-                    }))
 
                     if (this.debug) {
                         log(CONST.LOG.METHOD)
@@ -130,7 +133,6 @@ class NP {
                         terminalId: this.conf.terminalId,
                         ...param,
                     }))
-                    .then(response => response.accept_no)
 
                     if (this.debug) {
                         log(CONST.LOG.METHOD)
