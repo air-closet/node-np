@@ -6,7 +6,15 @@ import CONST from './constants'
 
 const { log } = console
 const readFile = path => fs.readFile(path, CONST.UTF8)
-const readXML = (path, arg) => readFile(path).then(plain => template(plain)(arg))
+const readXML = (path, arg) => readFile(path)
+.then(plain => {
+    try {
+        return template(plain)(arg)
+    } catch (err) {
+        return Promise.reject(err)
+    }
+})
+
 
 class NP {
     constructor(root) {
@@ -86,13 +94,11 @@ class NP {
     _convertGetResponseDetail(details) {
         if (details.regist_NG_result) {
             return {
-                status: CONST.RESPONSE.NG,
                 error: details.regist_NG_result.error_list,
             }
         }
 
         return {
-            status: CONST.RESPONSE.OK,
             result: details.regist_OK_result || details,
         }
     }

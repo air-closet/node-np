@@ -155,7 +155,6 @@ describe('api wrapper', () => {
         })
         .then(() => cli._get('', '', 'details'))
         .then(response => {
-            assert(response.status === 'OK')
             assert(response.result.np_transaction_id === 'xxxxx')
         })
         .then(() => {
@@ -163,7 +162,6 @@ describe('api wrapper', () => {
         })
         .then(() => cli._get('', '', 'details'))
         .then(response => {
-            assert(response.status === 'NG')
             assert(response.error.error_no === 'xxx12345')
         })
     })

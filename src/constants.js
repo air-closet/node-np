@@ -5,10 +5,6 @@ const CONST = {
         GET: 'get',
         POST: 'post',
     },
-    RESPONSE: {
-        OK: 'OK',
-        NG: 'NG',
-    },
     PATH: {
         HEAD: '/config/head.xml',
         CONF: '/config/config.json',

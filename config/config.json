@@ -12,29 +12,16 @@
             "telegramId": "XU0010"
         }
     },
-    "delivery_billing": {
-        "get": {
-            "interface": "MS_CB_OT_0004",
-            "path": "/config/delivery_billing/get.xml",
-            "telegramId": "XD0020",
-            "response": "shipment_report_details"
-        },
-        "post": {
-            "interface": "MS_CB_IN_0004",
-            "path": "/config/delivery_billing/post.xml",
-            "telegramId": "XU0020"
-        }
-    },
     "change_tran": {
         "get": {
             "interface": "MS_CB_OT_0002",
-            "path": "/config/fix_tran/get.xml",
+            "path": "/config/change_tran/get.xml",
             "telegramId": "XD0030",
             "response": "transaction_revision_details"
         },
         "post": {
             "interface": "MS_CB_IN_0002",
-            "path": "/config/fix_tran/post.xml",
+            "path": "/config/change_tran/post.xml",
             "telegramId": "XU0030"
         }
     },
@@ -49,6 +36,19 @@
             "interface": "MS_CB_IN_0003",
             "path": "/config/cancel_tran/post.xml",
             "telegramId": "XU0040"
+        }
+    },
+    "delivery_billing": {
+        "get": {
+            "interface": "MS_CB_OT_0004",
+            "path": "/config/delivery_billing/get.xml",
+            "telegramId": "XD0020",
+            "response": "shipment_report_details"
+        },
+        "post": {
+            "interface": "MS_CB_IN_0004",
+            "path": "/config/delivery_billing/post.xml",
+            "telegramId": "XU0020"
         }
     },
     "re_tran": {
