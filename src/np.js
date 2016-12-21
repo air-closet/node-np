@@ -75,7 +75,7 @@ class NP {
     _post(filePath, param) {
         return this._createRequest(filePath, param)
         .then(request => this._client.send(CONST.HTTP.POST, request))
-        .then(response => response.accept_no)
+        .then(response => ({ result: response.accept_no }))
     }
 
     _get(filePath, param, detailsKey) {
