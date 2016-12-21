@@ -155,7 +155,7 @@ describe('api wrapper', () => {
 
             return cli._post()
         })
-        .then(result => assert(result === postValues.accept_no))
+        .then(response => assert(response.result === postValues.accept_no))
         .then(() => {
             cli._client.send = () => Promise.resolve(getSuccessValues)
         })
