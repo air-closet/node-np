@@ -126,7 +126,7 @@ class NP {
                         CONST.LOG.METHOD,
                         method,
                         CONST.LOG.PARAM,
-                        getInfo,
+                        JSON.stringify(getInfo, null, ' '),
                     ].join('\n'))
                 }
 
@@ -144,7 +144,7 @@ class NP {
                         CONST.LOG.METHOD,
                         method,
                         CONST.LOG.PARAM,
-                        postInfo,
+                        JSON.stringify(postInfo, null, ' '),
                     ].join('\n'))
                 }
             })
