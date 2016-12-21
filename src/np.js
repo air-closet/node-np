@@ -4,7 +4,6 @@ import { classify } from 'underscore.string'
 import Client from './client'
 import CONST from './constants'
 
-const { log } = console
 const readFile = path => fs.readFile(path, CONST.UTF8)
 const readXML = (path, arg) => readFile(path)
 .then(plain => {
@@ -30,14 +29,14 @@ class NP {
             wsdl: null,
             terminalId: null,
             spCode: null,
-            debug: false,
+            log: console,
         }, opts)
 
         if (!(opts.wsdl && opts.terminalId && opts.spCode)) {
             return Promise.reject(CONST.ERROR.CLIENT)
         }
 
-        this.debug = opts.debug
+        this.logger = opts.log
         this.wsdl = opts.wsdl
         this._client = new Client({ wsdl: this.wsdl })
         this.conf = {
@@ -61,13 +60,13 @@ class NP {
 
         return Promise.all(createXML)
         .then(([head, body]) => {
-            if (this.debug) {
-                log(CONST.LOG.HEAD)
-                log(head)
-                log(CONST.LOG.BODY)
-                log(body)
-                log(CONST.LOG.DELIMITER)
-            }
+            this.logger.info([
+                CONST.LOG.HEAD,
+                head,
+                CONST.LOG.BODY,
+                body,
+                CONST.LOG.DELIMITER,
+            ].join('\n'))
 
             return { head, body }
         })
@@ -123,16 +122,17 @@ class NP {
                         ...param,
                     }, getInfo.response))
 
-                    if (this.debug) {
-                        log(CONST.LOG.METHOD)
-                        log(method)
-                        log(CONST.LOG.PARAM)
-                        log(getInfo)
-                    }
+                    this.logger.info([
+                        CONST.LOG.METHOD,
+                        method,
+                        CONST.LOG.PARAM,
+                        getInfo,
+                    ].join('\n'))
                 }
 
                 if (postInfo) {
                     method = `${CONST.HTTP.POST}${classify(apiName)}`
+
                     this[method] = param => Promise.resolve()
                     .then(() => this._post(postInfo.path, {
                         telegramId: postInfo.telegramId,
@@ -140,12 +140,12 @@ class NP {
                         ...param,
                     }))
 
-                    if (this.debug) {
-                        log(CONST.LOG.METHOD)
-                        log(method)
-                        log(CONST.LOG.PARAM)
-                        log(postInfo)
-                    }
+                    this.logger.info([
+                        CONST.LOG.METHOD,
+                        method,
+                        CONST.LOG.PARAM,
+                        postInfo,
+                    ].join('\n'))
                 }
             })
 

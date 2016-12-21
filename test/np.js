@@ -7,7 +7,9 @@ const defaultArg = {
     wsdl: 'https://test-api.com/',
     terminalId: 'terminalId',
     spCode: 'spCode',
-    debug: false,
+    log: {
+        info: () => Promise.resolve(),
+    },
 }
 
 const NP = new NPClass(process.cwd())
@@ -48,10 +50,14 @@ describe('api wrapper', () => {
         .then(() => { values.terminalId = 'dummyTerminalId' })
         .then(() => createClient(values))
         .catch(err => assert(err === 'required wsdl, terminalId, spCode.'))
-        .then(() => { values.spCode = 'dummySpCode' })
+        .then(() => {
+            values.spCode = 'dummySpCode'
+            values.log = {
+                info: () => Promise.resolve(),
+            }
+        })
         .then(() => createClient(values))
         .then(client => {
-            assert(client.debug === false)
             assert(client._client.wsdl === 'dummyWsdl')
             assert(client.wsdl === values.wsdl)
             assert(client.conf.terminalId === values.terminalId)
