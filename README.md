@@ -1,6 +1,6 @@
 # NetProtection API for Node.js
 
-## develop
+## Develop
 
 ```
 $ git clone git@github.com:air-closet/node-np.git && cd node-np
@@ -17,7 +17,7 @@ or
 $ npm run all
 ```
 
-## npm-scripts
+## Scripts
 
 ### lint
 
@@ -35,3 +35,7 @@ $ npm run all
 ### all
 
 This task executes all npm-scripts.
+
+## License
+
+MIT
