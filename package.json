@@ -6,8 +6,8 @@
   "scripts": {
     "lint": "$(npm bin)/eslint src test",
     "build": "$(npm bin)/babel src --out-dir lib",
-    "test": "$(npm bin)/mocha --require intelli-espower-loader",
-    "all": "npm run lint && npm run build && npm run test"
+    "mocha": "$(npm bin)/mocha --require intelli-espower-loader",
+    "test": "npm run lint && npm run build && npm run mocha"
   },
   "repository": {
     "type": "git",

@@ -10,11 +10,11 @@ $ npm i
 
 $ npm run lint
 $ npm run build
-$ npm run test
+$ npm run mocha
 
 or
 
-$ npm run all
+$ npm test
 ```
 
 ## Scripts
@@ -27,12 +27,12 @@ $ npm run all
 
 * babel
 
-### test
+### mocha
 
 * mocha
 * power-assert
 
-### all
+### test
 
 This task executes all npm-scripts.
 
