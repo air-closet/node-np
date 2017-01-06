@@ -29,14 +29,14 @@
         <site_url><%= siteUrl %></site_url>
         <billed_amount><%= billedAmount %></billed_amount>
         <goods_details>
-            <goods_information>
             <% for (var i = 0; i < goodsDetails.length; i++) { %>
+            <goods_information>
                 <% var info = goodsDetails[i] %>
                 <goods_name><%= info.goodsName %></goods_name>
                 <goods_price><%= info.goodsPrice %></goods_price>
                 <quantity><%= info.quantity %></quantity>
-            <% } %>
             </goods_information>
+            <% } %>
         </goods_details>
     </transaction_details>
 </root>

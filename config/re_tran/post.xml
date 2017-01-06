@@ -10,14 +10,14 @@
         <order_date><%= orderDate %></order_date>
         <billed_amount><%= billedAmount %></billed_amount>
         <goods_details>
+            <% for (let i = 0; i < goodsDetails.length; i++) { %>
             <goods_information>
-            <% for (var i = 0; i < goodsDetails.length; i++) { %>
-                <% var info = goodsDetails[i] %>
+                <% let info = goodsDetails[i] %>
                 <goods_name><%= info.goodsName %></goods_name>
                 <goods_price><%= info.goodsPrice %></goods_price>
                 <quantity><%= info.quantity %></quantity>
-            <% } %>
             </goods_information>
+            <% } %>
         </goods_details>
     </transaction_details>
 </root>
