@@ -121,13 +121,6 @@ class NP {
                         telegramId: getInfo.telegramId,
                         ...param,
                     }, getInfo.response))
-
-                    this.logger.info([
-                        CONST.LOG.METHOD,
-                        method,
-                        CONST.LOG.PARAM,
-                        JSON.stringify(getInfo, null, ' '),
-                    ].join('\n'))
                 }
 
                 if (postInfo) {
@@ -139,13 +132,6 @@ class NP {
                         terminalId: this.conf.terminalId,
                         ...param,
                     }))
-
-                    this.logger.info([
-                        CONST.LOG.METHOD,
-                        method,
-                        CONST.LOG.PARAM,
-                        JSON.stringify(postInfo, null, ' '),
-                    ].join('\n'))
                 }
             })
 
