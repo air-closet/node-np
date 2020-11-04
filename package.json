@@ -24,7 +24,7 @@
   "homepage": "https://github.com/air-closet/node-np#readme",
   "dependencies": {
     "fs-promise": "^1.0.0",
-    "soap": "^0.17.0",
+    "soap": "0.33.0 ",
     "underscore": "^1.8.3",
     "underscore.string": "^3.3.4",
     "xmljson": "^0.2.0"

@@ -1,4 +1,4 @@
-import soap from 'soap'
+import * as soap from 'soap'
 import xmljson from 'xmljson'
 
 class Client {
