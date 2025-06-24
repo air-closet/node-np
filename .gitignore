@@ -4,3 +4,9 @@ node_modules/
 npm-debug.log
 *.swp
 .idea
+
+# Ignore local Claude Code settings, transcripts, and other local files
+.claude/*
+# But DO commit the shared project settings and project-specific files
+!.claude/settings.json
+!.claude/*.project.*
